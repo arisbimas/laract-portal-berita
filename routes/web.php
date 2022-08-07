@@ -17,11 +17,6 @@ use Inertia\Inertia;
 |
 */
 
-Route::get(
-    '/',
-    [NewsController::class, 'index']
-);
-
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
 //         'canLogin' => Route::has('login'),
@@ -31,8 +26,39 @@ Route::get(
 //     ]);
 // });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get(
+    '/',
+    [NewsController::class, 'index']
+);
+
+Route::post(
+    '/news',
+    [NewsController::class, 'store']
+)->middleware(['auth', 'verified'])->name('crate.news');
+
+Route::get(
+    '/news/edit',
+    [NewsController::class, 'edit']
+)->middleware(['auth', 'verified'])->name('edit.news');
+
+Route::post(
+    '/news/update',
+    [NewsController::class, 'update']
+)->middleware(['auth', 'verified'])->name('crate.news');
+
+Route::post(
+    '/news/delete',
+    [NewsController::class, 'destroy']
+)->middleware(['auth', 'verified'])->name('delete.news');
+
+Route::get(
+    '/dashboard',
+    [NewsController::class, 'show']
+)->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
